@@ -6,7 +6,7 @@
 'use strict';
 
 // ── 🔑 YOUR API KEY — edit this one line ─────────────────
-const HARDCODED_KEY = 'AIzaSyD98jlt3u3B0yJedLFlMhI2uDCU7j54UHM';
+const HARDCODED_KEY = '';
 
 // ── Gemini Config ─────────────────────────────────────────
 const GEMINI_MODEL = 'gemini-2.5-flash';
@@ -423,11 +423,24 @@ function showToast(msg) {
 }
 
 // ── Init ──────────────────────────────────────────────────
-function init() {
+async function init() {
   renderHistory();
 
+  // Try fetching API key from backend (.env) if not already saved locally
+  if (!apiKey) {
+    try {
+      const res = await fetch('/api/key');
+      const data = await res.json();
+      if (data.key && data.key !== 'your_gemini_api_key_here') {
+        apiKey = data.key;
+      }
+    } catch (e) {
+      // Backend not running or no key found, silently continue
+    }
+  }
+
   if (apiKey) {
-    // Key available (hardcoded or saved) — go straight to chat, no modal
+    // Key available (hardcoded, saved, or from env) — go straight to chat, no modal
     useGemini = true;
     updateModeUI('gemini');
     hideApiModal();

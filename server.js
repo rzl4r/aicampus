@@ -211,6 +211,11 @@ app.get('/api/campus-info', (req, res) => {
   });
 });
 
+// Get API key for the frontend
+app.get('/api/key', (req, res) => {
+  res.json({ key: process.env.GEMINI_API_KEY });
+});
+
 // Main chat endpoint
 app.post('/api/chat', async (req, res) => {
   const { message, history = [] } = req.body;
