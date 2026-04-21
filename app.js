@@ -133,8 +133,8 @@ function localAnswer(q) {
 }
 
 // ── State ─────────────────────────────────────────────────
-// Hardcoded key wins over localStorage; localStorage is kept as fallback
-let apiKey = HARDCODED_KEY || localStorage.getItem('campusbot_apikey') || '';
+// Local config wins over localStorage
+let apiKey = HARDCODED_KEY || (typeof CONFIG !== 'undefined' ? CONFIG.GEMINI_API_KEY : '') || localStorage.getItem('campusbot_apikey') || '';
 let useGemini = false;
 let isTyping = false;
 let chatHistory = [];          // [{role, parts:[{text}]}] — Gemini format
@@ -147,7 +147,6 @@ const apiKeyInput = document.getElementById('apiKeyInput');
 const apiKeyToggle = document.getElementById('apiKeyToggle');
 const saveApiBtn = document.getElementById('saveApiBtn');
 const skipApiBtn = document.getElementById('skipApiBtn');
-const changeKeyBtn = document.getElementById('changeKeyBtn');
 const sidebar = document.getElementById('sidebar');
 const overlay = document.getElementById('overlay');
 const menuBtn = document.getElementById('menuBtn');
@@ -197,11 +196,6 @@ skipApiBtn.addEventListener('click', () => {
   showToast('Running in Basic mode (built-in knowledge)');
 });
 
-changeKeyBtn.addEventListener('click', () => {
-  apiKeyInput.value = apiKey;
-  showApiModal();
-  closeSidebar();
-});
 
 // ── Mode UI ───────────────────────────────────────────────
 function updateModeUI(mode) {
@@ -423,21 +417,8 @@ function showToast(msg) {
 }
 
 // ── Init ──────────────────────────────────────────────────
-async function init() {
+function init() {
   renderHistory();
-
-  // Try fetching API key from backend (.env) if not already saved locally
-  if (!apiKey) {
-    try {
-      const res = await fetch('/api/key');
-      const data = await res.json();
-      if (data.key && data.key !== 'your_gemini_api_key_here') {
-        apiKey = data.key;
-      }
-    } catch (e) {
-      // Backend not running or no key found, silently continue
-    }
-  }
 
   if (apiKey) {
     // Key available (hardcoded, saved, or from env) — go straight to chat, no modal
