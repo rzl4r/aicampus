@@ -22,37 +22,6 @@
     <div class="orb orb-3"></div>
   </div>
 
-  <!-- ── API KEY SETUP MODAL ── -->
-  <div class="modal-overlay" id="apiModal">
-    <div class="api-modal">
-      <div class="api-modal-icon">🔑</div>
-      <h2>Enter your Gemini API Key</h2>
-      <p>CampusBot uses Google Gemini AI. Get a <strong>free key</strong> in 30 seconds — no credit card needed.</p>
-      <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener" class="get-key-link">
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-        Get free API key at aistudio.google.com
-      </a>
-      <div class="api-input-wrap">
-        <input type="password" id="apiKeyInput" placeholder="Paste your API key here (AIza...)" autocomplete="off"
-          spellcheck="false" />
-        <button class="api-key-toggle" id="apiKeyToggle" title="Show/hide key">
-          <svg id="eyeIcon" viewBox="0 0 24 24" fill="none">
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2" />
-            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" />
-          </svg>
-        </button>
-      </div>
-      <p class="api-note">🔒 Your key is stored only in your browser (localStorage) and never sent anywhere except
-        Google's servers.</p>
-      <div class="api-modal-btns">
-        <button class="btn-skip" id="skipApiBtn">Use without AI (Basic mode)</button>
-        <button class="btn-save" id="saveApiBtn">Save & Start Chatting</button>
-      </div>
-    </div>
-  </div>
 
   <!-- ── SIDEBAR ── -->
   <aside class="sidebar" id="sidebar">
